@@ -1,4 +1,6 @@
 import datetime
+import os
+from dotenv import load_dotenv
 import pandas
 from collections import defaultdict
 from http.server import HTTPServer, SimpleHTTPRequestHandler
@@ -24,8 +26,10 @@ def validate(year: int):
 
 
 def get_wines_from_exel():
+    load_dotenv()
+    path = os.environ["PATH_TO_EXEL_FILE"]
     excel_data_df = pandas.read_excel(
-        'wine3.xlsx',
+        path,
         names=['category','title','variety','price','image', 'promo'],
         keep_default_na=False)
     table = excel_data_df.to_dict(orient='records')
